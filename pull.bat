@@ -12,15 +12,32 @@ for /d %%i in ("%repo_directory%\*") do (
     REM 检查 git pull 的返回值
     IF ERRORLEVEL 1 (
       echo 存在local changes，正在删除本地更改：%%~nxi
+
+      :retry_checkout
       git checkout .
 
-      REM 检查的返回值
       IF ERRORLEVEL 1 (
           echo git clean 失败，删除 .git\index.lock 文件
-          del /f .git\index.lock
-          git checkout .
-          git pull -f --rebase
+
+             :retry_delete
+              del /f .git\index.lock
+                IF EXIST .git\index.lock (
+                echo 删除失败，正在重试...
+                timeout /t 2 >nul
+                goto retry_delete
+        )
+        git checkout .
       )
+      git pull -f --rebase
+         IF ERRORLEVEL 1 (
+         echo 拉取失败
+         goto retry_checkout
+         )
+         else (
+         echo 拉取成功
+         )
+
     )
 ) 
 endlocal
+pause
