@@ -5,7 +5,7 @@ setlocal enabledelayedexpansion
 set repo_directory=C:
 
 for /d %%i in ("%repo_directory%\*") do (
-    cd "%%i"
+    cd /d "%%i"
 
     echo 正在更新代码库：%%~nxi
     git pull -f --rebase)
