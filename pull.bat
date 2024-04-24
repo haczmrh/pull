@@ -40,4 +40,3 @@ for /d %%i in ("%repo_directory%\*") do (
     )
 ) 
 endlocal
-pause
