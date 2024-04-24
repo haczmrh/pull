@@ -20,5 +20,9 @@ if '%errorlevel%' NEQ '0' (
 :gotAdmin
     :: 此处添加你的 xcopy 命令
     xcopy /y "pull.bat" "c:\windows"
-    echo 执行 xcopy 命令完成。
+    IF ERRORLEVEL 1 (
+         echo 拉取失败
+         pause)
+    else(
+    echo 执行 xcopy 命令完成。)
  
