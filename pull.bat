@@ -32,8 +32,7 @@ for /d %%i in ("%repo_directory%\*") do (
          IF ERRORLEVEL 1 (
          echo 拉取失败
          goto retry_checkout
-         )
-         else (
+         )  else (
          echo 拉取成功
          )
 
