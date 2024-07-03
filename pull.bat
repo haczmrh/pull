@@ -2,7 +2,7 @@
 CHCP 65001
 
 setlocal enabledelayedexpansion
-set repo_directory=C:
+set repo_directory=g:
 
 for /d %%i in ("%repo_directory%\*") do (
     cd /d "%%i"
