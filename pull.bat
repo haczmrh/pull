@@ -14,7 +14,7 @@ for /d %%i in ("%repo_directory%\*") do (
       echo 存在local changes，正在删除本地更改：%%~nxi
 
       :retry_checkout
-      git checkout .
+      git clean -d -f
 
       IF ERRORLEVEL 1 (
           echo git clean 失败，删除 .git\index.lock 文件
@@ -26,7 +26,7 @@ for /d %%i in ("%repo_directory%\*") do (
                 timeout /t 2 >nul
                 goto retry_delete
         )
-        git checkout .
+      git clean -d -f
       )
       git pull -f --rebase
          IF ERRORLEVEL 1 (
