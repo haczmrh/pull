@@ -8,11 +8,12 @@ for /d %%i in ("%repo_directory%\*") do (
     cd /d "%%i"
     echo 正在更新代码库：%%~nxi
 
+    :retry_pull
     git pull -f --rebase
     if ERRORLEVEL 1 (
         echo 存在本地更改，正在删除本地更改：%%~nxi
 
-        :retry_checkout
+        :retry_clean
         git clean -d -f
         if ERRORLEVEL 1 (
             echo git clean 失败，尝试删除 .git\index.lock 文件
@@ -29,7 +30,7 @@ for /d %%i in ("%repo_directory%\*") do (
         git pull -f --rebase
         if ERRORLEVEL 1 (
             echo 拉取失败，请检查
-            goto retry_checkout
+            goto retry_pull
         ) else (
             echo 拉取成功
         )
