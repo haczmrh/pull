@@ -48,3 +48,5 @@ for /d %%i in ("%repo_directory%\*") do (
 )
 
 endlocal
+cd /d G:/Repo/Majhong/ConfigData
+git pull -f --rebase
